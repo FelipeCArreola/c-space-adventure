@@ -20,9 +20,8 @@ int main(int argc, char *argv[])
     char name[40];
     fgets(name,40,stdin);
     name[strcspn(name, "\n")] = 0;
-    printf("Nice to meet you, %s. My name is Eliza\
-    I'm an old frind of Alexa.\n");
-    printf("let's go on an adventure!");
+    printf("Nice to meet you, %s. My name is Eliza, I'm an old frind of Alexa.\n", name);
+    printf("let's go on an adventure!\n");
 
     return 0;
 }
