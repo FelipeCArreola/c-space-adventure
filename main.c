@@ -21,7 +21,7 @@ typedef struct planet
 
 planet arr_planets[PLANETS_COUNT];
 
-int random_planet () {
+int random_planet_idx () {
     time_t ti;
     int random_num;
     srand((unsigned) time(&ti));
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     playerChoice[strcspn(playerChoice, "\n")] = 0;
     printf("Choice is %s\n", playerChoice);
     // TODO : if clause that assesses 
-    printf("Random Number: %d\n", random_planet());
+    printf("Random Number: %d\n", random_planet_idx());
     printf("Traveling to Pluto...\n");
     printf("Arrived at Pluto, it's very cold here.\n");
     
