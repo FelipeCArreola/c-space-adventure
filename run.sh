@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcc -Wall -g main.c -o main
+gcc -Wall -g functions.c main.c -o main
 ./main
 
 
