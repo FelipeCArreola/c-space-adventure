@@ -1,4 +1,5 @@
 # include "functions.h"
+# include "cJSON.h"
 
 // gcc -Wall -g main.c -o main
 // ./main
