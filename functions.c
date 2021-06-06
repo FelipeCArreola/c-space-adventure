@@ -9,18 +9,6 @@ int random_planet_idx () {
     return random_num;
 }
 
-// line counter of a file :
-int count_of_lines_in_file (FILE *f) {
-    char c;
-    int count = 1;
-    for (c = getc(f); c != EOF; c = getc(f)) {
-        if (c == '\n') {
-            count = count + 1;
-        }
-    }
-    return count;
-}
-
 char *get_planet_name_entry(){
     char *entry = (char *) malloc(20);
     printf("Name the planet you would like to visit.\n");

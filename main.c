@@ -5,7 +5,6 @@
 // ./main
 
 // source : error handling : https://www.tutorialspoint.com/cprogramming/c_error_handling.htm
-// source : line counter of a file : https://www.geeksforgeeks.org/c-program-count-number-lines-file/
 
 extern int errno;
 
@@ -14,22 +13,14 @@ planet arr_planets[PLANETS_COUNT];
 int main(int argc, char *argv[])
 {
     FILE *pf;
-    char *fPath = "./data/solar_system.txt";
-    pf = fopen ( fPath, "r");
     char *line_buffer= (char *) malloc(150);
     // error handling: 
-    if (pf == NULL) {
+    if ( (pf = fopen ( argv[1], "r")) == NULL) {
         fprintf(stderr, "Value of error: %d\n", errno);
         perror("Error Message");
-        printf("Error Opening File: \'%s\'.\n", fPath);
+        printf("Error Opening File: \'%s\'.\n", argv[1]);
         exit(1);
     }
-
-    int line_count = count_of_lines_in_file(pf); 
-    if ( line_count != PLANETS_COUNT) {
-        printf("Error-file \'%s\' line count (%d) does not meet the required line count of %d.\n", fPath, line_count, PLANETS_COUNT);
-        exit(1);
-    } 
 
     // TODO : add ability to read line by line
     // --- BETTER yet work on cJSON and import- work and parse that
