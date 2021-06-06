@@ -1,5 +1,10 @@
+/*
+    Author: Felipe C. Arreola
+    Class: SE201
+    Term: Spring 2021
+    Project: C Space Adventure
+*/
 # include "functions.h"
-# include "cJSON.h"
 
 // gcc -Wall -g main.c -o main
 // ./main
@@ -8,13 +13,11 @@
 
 extern int errno;
 
-planet arr_planets[PLANETS_COUNT];
+data_planet array_planets[PLANETS_COUNT];
 
 int main(int argc, char *argv[])
 {
     FILE *pf;
-    char *line_buffer= (char *) malloc(150);
-    // error handling: 
     if ( (pf = fopen ( argv[1], "r")) == NULL) {
         fprintf(stderr, "Value of error: %d\n", errno);
         perror("Error Message");
@@ -22,33 +25,30 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    // TODO : add ability to read line by line
-    // --- BETTER yet work on cJSON and import- work and parse that
-    // error-- not reading file?? 
+    char buffer[2048] = {0};
+    fread(buffer, 1, sizeof(buffer), pf);
+    cJSON *json_file_root = cJSON_Parse(buffer);
 
-    int line_idx = 0;
-    while (fgets(line_buffer, sizeof(line_buffer), pf))
-    {
-        if (line_idx == 0) {
-            arr_planets[line_idx].name = strtok(line_buffer, ":");
-            arr_planets[line_idx].description = strtok(NULL, ":");    
-        } else {
-            arr_planets[line_idx].name = strtok(NULL, ":");
-            arr_planets[line_idx].description = strtok(NULL, ":");
-        }
-        line_idx ++;
+    s_system = cJSON_GetObjectItemCaseSensitive(json_file_root, "name");
+    
+    if (cJSON_IsString(s_system) && (s_system->valuestring != NULL) ) {
+        printf("Welcome to the %s!\n", s_system->valuestring);
     }
-        
-    fclose(pf);
 
-    // TESTING- printing array values
-    for (size_t i = 0; i < PLANETS_COUNT; i++)
-    {
-        printf("name: %s , description: %s\n", arr_planets[i].name, arr_planets[i].description);
+    planet = NULL;
+    planets = cJSON_GetObjectItemCaseSensitive(json_file_root, "planets");
+    int idx = 0;
+    cJSON_ArrayForEach(planet, planets) {
+        name = cJSON_GetObjectItemCaseSensitive(planet, "name");
+        description = cJSON_GetObjectItemCaseSensitive(planet, "description");
+        array_planets[idx].name = name->valuestring;
+        array_planets[idx].description= description->valuestring;
+        idx ++; 
     }
     
-    printf("Welcome to the Solar System!\n");
-    printf("There are 9 planets to explore.\n");
+    fclose(pf);
+
+    printf("There are %d planets to explore.\n", PLANETS_COUNT);
     printf("What is your name?\n");
     char name[40];
     fgets(name,40,stdin);
@@ -61,11 +61,11 @@ int main(int argc, char *argv[])
     playerChoice[strcspn(playerChoice, "\n")] = 0;
     printf("Choice is %s\n", playerChoice);
     // TODO : if clause that assesses 
-    // printf("entry: %s\n", get_planet_name_entry());
-    search_planets_for_name( get_planet_name_entry(), arr_planets );
-    printf("Random Number: %d\n", random_planet_idx());
+    search_by_name( get_planet_name_entry(), array_planets );
+    search_by_index( random_planet_idx(), array_planets);
     printf("Traveling to Pluto...\n");
     printf("Arrived at Pluto, it's very cold here.\n");
     
+    cJSON_Delete(json_file_root);
     return 0;
 }

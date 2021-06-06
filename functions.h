@@ -8,13 +8,22 @@
 #include <time.h>
 #include <regex.h>
 
+#include "cJSON.h"
+
 #define PLANETS_COUNT 9
 
-typedef struct planet
+cJSON *s_system;
+cJSON *planet;
+cJSON *planets;
+cJSON *name;
+cJSON *description;
+
+typedef struct data_planet 
 {
     char *name;
     char *description;
-} planet;
+} data_planet;
+
 
 int random_planet_idx ();
 
@@ -23,7 +32,9 @@ int count_of_lines_in_file (FILE *f);
 
 char *get_planet_name_entry();
 
-void search_planets_for_name (char *str, planet array[]) ;
+void search_by_name (char *str, data_planet[]) ;
+
+void search_by_index (int idx, data_planet[]);
 
 void has_compiled_expression (int num);
 

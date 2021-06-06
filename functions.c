@@ -16,9 +16,9 @@ char *get_planet_name_entry(){
     return entry;
 }
 
-void search_planets_for_name (char *str, planet array[]) {
+void search_by_name (char *str, data_planet array[]) {
     int idx = 0;
-    while (idx < PLANETS_COUNT)
+    for (size_t i = 0; i < PLANETS_COUNT; i++)
     {
         if(strcmp(array[idx].name, str) == 0) {
             printf("Traveling to %s...\n", array[idx].name);
@@ -28,8 +28,15 @@ void search_planets_for_name (char *str, planet array[]) {
             printf("Traveling to Null...\n");
             printf("Arrived at Null. Null\n");
         }
-    }      
-    free(str);
+    }
+    free(str);  
+}
+
+void search_by_index (int idx, data_planet array[]) {
+    if ( 0 <= idx && idx < PLANETS_COUNT) {
+        printf("Traveling to %s...\n", array[idx].name);
+        printf("Arrived at %s. %s\n", array[idx].name, array[idx].description);
+    }
 }
 
 void has_compiled_expression (int num) {
