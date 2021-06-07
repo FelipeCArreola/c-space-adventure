@@ -1,5 +1,5 @@
 /*
-    Author: Felipe C. Arreola
+    Author: Felipe C Arreola
     Class: SE201
     Term: Spring 2021
     Project: C Space Adventure
@@ -55,16 +55,23 @@ int main(int argc, char *argv[])
     name[strcspn(name, "\n")] = 0;
     printf("Nice to meet you, %s. My name is Eliza, I'm an old frind of Alexa.\n", name);
     printf("let's go on an adventure!\n");
-    printf("Shall I randomly choose a planet for you to visit? (\'Y\' or \'N\')\n");
+
+    int run = 0;
     char playerChoice[2];
-    fgets(playerChoice,40,stdin);
-    playerChoice[strcspn(playerChoice, "\n")] = 0;
-    printf("Choice is %s\n", playerChoice);
-    // TODO : if clause that assesses 
-    search_by_name( get_planet_name_entry(), array_planets );
-    search_by_index( random_planet_idx(), array_planets);
-    printf("Traveling to Pluto...\n");
-    printf("Arrived at Pluto, it's very cold here.\n");
+    while (!run) {
+        printf("Shall I randomly choose a planet for you to visit? (\'Y\' or \'N\')\n");
+        fgets(playerChoice,40,stdin);
+        playerChoice[strcspn(playerChoice, "\n")] = 0;
+        run = assess_input(playerChoice, "^[YyNn]");
+        if (run == 0) {
+            printf("Sorry, I didn\'t get that.\n");
+        }
+    }
+    if (assess_input(playerChoice, "^[Yy]")) {
+        search_by_index( random_planet_idx(), array_planets);
+    } else {
+        search_by_name( get_planet_name_entry(), array_planets );
+    }
     
     cJSON_Delete(json_file_root);
     return 0;

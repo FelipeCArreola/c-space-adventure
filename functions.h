@@ -40,6 +40,4 @@ void has_compiled_expression (int num);
 
 int assess_input (char *input, char *regex_str);
 
-
-
 #endif
