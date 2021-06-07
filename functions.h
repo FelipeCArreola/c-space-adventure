@@ -24,11 +24,7 @@ typedef struct data_planet
     char *description;
 } data_planet;
 
-
 int random_planet_idx ();
-
-// line counter of a file :
-int count_of_lines_in_file (FILE *f);
 
 char *get_planet_name_entry();
 
